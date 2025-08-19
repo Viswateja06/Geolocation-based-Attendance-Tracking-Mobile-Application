@@ -9,6 +9,12 @@ Develop a mobile application leveraging GPS and geofencing to automate attendanc
 Protect user privacy and data security, complying with regulations.
 Make the system scalable and adaptable for organizations of different sizes and requirements
 
+# Technology Stack
+Frontend: React.js, HTML, CSS
+Backend: Python
+Geolocation Libraries
+Database: MYSQL
+
 # Project Timeline
 Review-1: 20 Aug 2025
 Review-2: 03 Sep 2025
