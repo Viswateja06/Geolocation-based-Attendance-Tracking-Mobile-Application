@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#2196F3">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+</head>
+<body>
+    <div id="app">
+        
+        
+
+        <!-- Login Screen -->
+        <div id="login" class="screen">
+            <div class="container">
+                <div class="header">
+                    <h1>📍 Attendance Tracking</h1>
+                    <p>Geolocation-based attendance for Students</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="showLogin()">Login</button>
+                        <button class="tab-btn" onclick="showRegister()">Register</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="form active">
+                        <div class="input-group">
+                            <input type="text" id="loginUsername" placeholder="Username or Email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="registerForm" class="form">
+                        <div class="input-group">
+                            <input type="text" id="registerUsername" placeholder="Username" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="registerEmail" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="registerPassword" placeholder="Password" required>
+                        </div>
+                        <div class="input-group">
+                            <select id="registerRole" required>
+                                <option value="student" selected>Student</option>
+                                <option value="faculty">Faculty</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="screen">
+            <div class="header">
+                <h1>📍 Attendance Tracking</h1>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="container">
+                <!-- Status Card -->
+                <div class="status-card">
+                    <div class="status-info">
+                        <h3 id="statusTitle">Today's Status</h3>
+                        <p id="statusDate"></p>
+                        <div id="statusDetails" class="status-details">
+                            <div class="status-item">
+                                <span class="status-label">Check In:</span>
+                                <span id="checkInStatus" class="status-value">Not checked in</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Check Out:</span>
+                                <span id="checkOutStatus" class="status-value">Not checked out</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Location:</span>
+                                <span id="locationStatus" class="status-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button id="checkInBtn" class="btn btn-success" onclick="forceCheckInWithCurrentLocation()">
+                        📍 Check In
+                    </button>
+                    <button id="checkOutBtn" class="btn btn-danger" onclick="checkOut()" disabled>
+                        📤 Check Out
+                    </button>
+                </div>
+
+                <!-- Location Status -->
+                <div id="locationInfo" class="location-info">
+                    <p id="locationText">📍 Getting your location...</p>
+                    <div id="locationAccuracy" class="location-accuracy"></div>
+                    <div style="margin-top:8px">
+                        <button class="btn btn-primary" onclick="refreshLocation()">Use Current Location</button>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="nav-tabs">
+                    <button class="nav-tab active" onclick="showTab('dashboard')">Dashboard</button>
+                    <button class="nav-tab" onclick="showTab('history')">History</button>
+                    <button id="facultyNavTab" class="nav-tab" style="display:none" onclick="showTab('faculty')">Faculty</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Screen -->
+        <div id="history" class="screen">
+            <div class="header">
+                <h1>📊 Attendance History</h1>
+                <button class="btn btn-secondary" onclick="showTab('dashboard')">Back</button>
+            </div>
+
+            <div class="container">
+                <div class="date-filter">
+                    <input type="date" id="startDate" class="date-input">
+                    <input type="date" id="endDate" class="date-input">
+                    <button class="btn btn-primary" onclick="loadAttendanceHistory()">Filter</button>
+                </div>
+
+                <div id="historyList" class="history-list">
+                    <!-- History items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Screen -->
+    <div id="faculty" class="screen">
+        <div class="header">
+            <h1>👩‍🏫 Faculty Attendance View</h1>
+            <button class="btn btn-secondary" onclick="showTab('dashboard')">Back</button>
+        </div>
+        <div class="container">
+            <div class="date-filter">
+                <input type="date" id="facDate" class="date-input">
+                <button class="btn btn-primary" onclick="loadFacultyStatus()">Refresh</button>
+            </div>
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                        </tr>
+                    </thead>
+                    <tbody id="facultyTbody">
+                        <tr><td colspan="4" class="muted">No data</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
