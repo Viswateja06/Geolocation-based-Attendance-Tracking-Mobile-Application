@@ -233,10 +233,6 @@ To change the office location:
 ### Support
 For technical support or feature requests, please create an issue in the project repository.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Contributing
 
 1. Fork the repository
